@@ -1,0 +1,79 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Prodotti>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+
+
+    <h2 class="display-4">Carrello</h2>
+
+
+    <table class="table table-striped-columns">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descrizione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prezzo)
+            </th>
+            <th>
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descrizione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Prezzo)
+                </td>
+                <td>
+                    @Html.ActionLink("Cancella", "Rimuovi", new { id = item.IdProdotto }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+    <form action="/Home/CreateCheckOutSession" method="post">
+        <input type="text" id="amount" name="amount" placeholder="@Model.Sum(item => item.Prezzo).ToString("0.00")"  value="@Model.Sum(item => item.Prezzo).ToString("0.00")"/>
+        <button type="submit">Checkout</button>
+    </form>
+    <p class="text-end me-3 fs-4 fw-bold text-black-50">Totale ordine: &euro;@(Model.Sum(item => item.Prezzo).ToString("0.00")) </p>
+    @using (Html.BeginForm("Acquista", "Carrello", FormMethod.Post))
+    {
+        <div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Proprietario</span>
+                <input id="Proprietario" name="Proprietario" required class="form-control" type="text" />
+            </div>
+            <div class="input-group mb-2">
+                <span class="input-group-text">Codice Fiscale</span>
+                <input id="CodFiscale" name="CodFiscale" required class="form-control" type="text"/>
+            </div>
+            <div class="input-group">
+                <span class="input-group-text">Numero Ricetta</span>
+                <input id="NumRicetta" name="NumRicetta" required class="form-control" type="text"/>
+            </div>
+            <input class="btn btn-primary mt-4" type="submit" value="Conferma ordine" />
+        </div>
+    }
+
+</div>

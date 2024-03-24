@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Dipendenti>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-4">
+
+
+    <h2>Lista dipendenti</h2>
+
+    <p>
+        @Html.ActionLink("Aggiungi dipendente", "Create", new {}, new {@class = "btn btn-primary"})
+    </p>
+    <table class="table table-striped-columns">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Ruolo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cognome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ruolo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cognome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.ActionLink("Modifica", "Edit", new { id = item.IdDipendente }, new {@class = "btn btn-warning"}) 
+                    @Html.ActionLink("Elimina", "Delete", new { id = item.IdDipendente }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

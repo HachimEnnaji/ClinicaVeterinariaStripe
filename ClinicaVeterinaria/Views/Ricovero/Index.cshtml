@@ -1,0 +1,119 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Ricovero>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+
+
+    <h2>Ricoveri</h2>
+    @if (!string.IsNullOrEmpty(Request.QueryString["id"]))
+    {
+        @Html.ActionLink("Effettua visita", "Create", "Ricovero", new { id = Request.QueryString["id"] }, new {@class = "btn btn-success"})
+    }
+
+
+
+    <div class="row ">
+        <div class="col-md-9">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Animale.Nome)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DataInizio)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Costo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsAttivo)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Animale.Nome)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DataInizio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Costo)
+                        </td>
+                        <td>
+                            @{ if (item.IsAttivo == true)
+                                {
+                                    <span>Ricoverato</span>
+                                }
+                                else
+                                {
+                                    <span>Non Ricoverato</span>
+                                }
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("Elimina", "Delete", new { id = item.IdRicovero }, new {@class = "btn btn-danger"})
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+        <div class="col-md-3 bg-transparent rounded-3 p-3">
+            <h4>Rimborso Comune</h4>
+            <p class="m-0">Seleziona mese</p>
+            <select id="select" class="form-control">
+                <option value="1">Gennaio</option>
+                <option value="2">Febbraio</option>
+                <option value="3">Marzo</option>
+                <option value="4">Aprile</option>
+                <option value="5">Maggio</option>
+                <option value="6">Giugno</option>
+                <option value="7">Luglio</option>
+                <option value="8">Agosto</option>
+                <option value="9">Settembre</option>
+                <option value="10">Ottobre</option>
+                <option value="11">Novembre</option>
+                <option value="12">Dicembre</option>
+            </select>
+            <button id="bottone" class="btn btn-success mt-2">Calcola</button>
+            <p class="m-0 mt-3 fw-bold">Totale rimborso: <span class="fw-bold" id="CalcoloRimborso"></span></p>
+            
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+       
+        const bottone = document.getElementById("bottone");
+        bottone.addEventListener("click", function () {
+            const value = document.getElementById("select").value;
+            fetchRimborso(value);
+        });
+
+        function fetchRimborso(value) {
+            fetch("/Ricovero/RicoveroAttivo?month="+value)
+                .then(response => response.json())
+                .then(data => {
+                    if (data > 0) {
+                        document.getElementById("CalcoloRimborso").classList.add("text-success");
+                        document.getElementById("CalcoloRimborso").classList.remove("text-danger");
+                        document.getElementById("CalcoloRimborso").innerText = data + "€";
+                    } else {
+                        document.getElementById("CalcoloRimborso").classList.add("text-danger");
+                        document.getElementById("CalcoloRimborso").classList.remove("text-success");
+                        document.getElementById("CalcoloRimborso").innerText = data;
+                    }
+                })
+                .catch(error => console.error("Errore nel reperimento dati: ", error));
+        }
+
+    </script>
+}
+

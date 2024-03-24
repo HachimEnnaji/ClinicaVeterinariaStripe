@@ -1,0 +1,59 @@
+﻿@model ClinicaVeterinaria.Models.Visita
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+    
+
+    <h3>Sei sicuro di volerlo eliminare?</h3>
+    <div>
+        <dl class="dl-horizontal ">
+            <dt>
+                @Html.DisplayNameFor(model => model.Animale.Nome)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Animale.Nome)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DataVisita)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DataVisita)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Esame)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Esame)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DescrizioneCura)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.DescrizioneCura)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+
+            </div>
+            <div class="text-end">
+                @Html.ActionLink("Torna indietro", "Index", new { }, new { @class = "btn btn-warning" })
+            </div>
+        }
+    </div>
+</div>

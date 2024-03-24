@@ -1,0 +1,54 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Visita>
+
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+    <div class="d-flex align-items-center">
+        <h2 class="display-4 me-4">Lista visite</h2>
+        @Html.ActionLink("Effettua visita", "Create", "Visita", new { id = TempData["idAnimale"] }, new { @class = " btn btn-success" })
+
+    </div>
+    <table class="table table-striped-columns mt-4">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Animale.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animale.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataVisita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Esame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescrizioneCura)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Animale.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItel => item.Animale.Tipo)
+                </td>
+                <td>
+                    @item.DataVisita.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Esame)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescrizioneCura)
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div class="text-end">
+        @Html.ActionLink("Torna a animali", "Index", "Animale", new { }, new { @class = "btn btn-warning mt-5" })
+    </div>
+</div>

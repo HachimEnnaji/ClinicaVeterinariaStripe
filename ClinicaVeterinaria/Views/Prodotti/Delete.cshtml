@@ -1,0 +1,92 @@
+﻿@model ClinicaVeterinaria.Models.Prodotti
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+    <h3>Sei sicuro di volerlo eliminare?</h3>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Armadietti.IdArmadietto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Armadietti.IdArmadietto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cassetti.IdCassetto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cassetti.IdCassetto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fornitori.Recapito)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fornitori.Recapito)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tipo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tipo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descrizione)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descrizione)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantita)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantita)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Prezzo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Prezzo)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> 
+
+        </div>
+        <div class="text-end mt-4">
+            @Html.ActionLink("Torna indietro", "Index", new { }, new { @class = "btn btn-warning" })
+        </div>
+    }
+</div>

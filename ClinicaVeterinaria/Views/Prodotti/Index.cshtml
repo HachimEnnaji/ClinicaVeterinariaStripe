@@ -1,0 +1,121 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Prodotti>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+
+
+    <div class="d-flex align-items-center justify-content-between flex-wrap">
+        <h2 class="display-4">Lista Prodotti</h2>
+
+        <div class="">
+            <h3> Cerca il tuo prodotto </h3>
+            <div class="d-flex">
+                <input class="form-control" type="text" id="search" placeholder="Cerca Prodotto" />
+                <button id="bottone" class="btn btn-primary ms-2"> Cerca</button>
+            </div>
+            
+            <div id="result" class="d-none mt-3">
+                <div class="card mb-3">
+                    <div class="row g-0">
+                        <div class="col-md-4 p-3">
+                            <img id="immagine" src="~/Content/img/medicinaDefault.png" class="img-fluid rounded-circle" alt="">
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body">
+                                <h5 id="nome" class="card-title"></h5>
+                                <p id="armadietto"></p>
+                                <p id="cassetto"></p>
+                                <p id="quantita"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <p class="m-0">
+            @Html.ActionLink("Aggiungi un prodotto", "Create", new { }, new { @class = "btn btn-primary" })
+        </p>
+
+    </div>
+
+
+    
+
+    
+</div>
+<div class="row mt-4 g-2">
+    @foreach (var item in Model)
+    {
+        <div class="col-6">
+            <div class="card mb-3 subtleBg">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="~/Content/img/medicinaDefault.png" class="img-fluid rounded-circle" alt="">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Nome)</h5>
+                            <p class="card-text">Armadietto: @Html.DisplayFor(modelItem => item.Armadietti.IdArmadietto)</p>
+                            <p class="card-text">Cassetto: @Html.DisplayFor(modelItem => item.Cassetti.IdCassetto)</p>
+                            <p class="card-text">Quantità: @Html.DisplayFor(modelItem => item.Quantita)</p>
+                            <p class="card-text">Prezzo: @Html.DisplayFor(modelItem => item.Prezzo)</p>
+                            <div class="btn-group" role="group" aria-label="Actions">
+                                @Html.ActionLink("Edit", "Edit", new { id = item.IdProdotto }, new { @class = "btn btn-warning border-dark" })
+                                @Html.ActionLink("Delete", "Delete", new { id = item.IdProdotto }, new { @class = "btn btn-danger border-dark" })
+                                @Html.ActionLink("Aggiungi al carrello", "AggiungiAlCarrello", new { id = item.IdProdotto }, new { @class = "btn btn-success border-dark" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+
+
+
+@section Scripts{
+    <script>
+
+        const bottone = document.getElementById('bottone');
+        bottone.addEventListener('click', function () {
+            const Prodotto = document.getElementById('search').value;
+            fetchProdotto(Prodotto);
+            Prodotto = "";
+        });
+
+        function fetchProdotto(Prodotto) {
+            const path = "/Content/img/";
+            fetch("/Prodotti/CercaProdotto?Nome=" + Prodotto)
+                .then(response => response.json())
+                .then(data => {
+                    const div = document.getElementById('result');
+                    const nome = document.getElementById('nome');
+                    nome.textContent ="Nome: " + data.Nome;
+                    const armadietto = document.getElementById('armadietto');
+                    armadietto.textContent = "Armadietto: " + data.Id_Armadietto_FK;
+                    const cassetto = document.getElementById('cassetto');
+                    cassetto.textContent = "Cassetto: " + data.Id_Cassetto_FK;
+                    const quantita = document.getElementById('quantita')
+                    quantita.textContent = "Quantità: " + data.Quantita
+                    div.classList.remove('d-none');
+                })
+                .catch(error => console.error("Errore nel reperimento dati: ", error));
+
+        }
+    </script>
+}
+
+
+
+
+
+

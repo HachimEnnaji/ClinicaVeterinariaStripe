@@ -1,0 +1,50 @@
+﻿@model ClinicaVeterinaria.Models.Vendite
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vendite</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Proprietario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Proprietario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CodFiscale)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CodFiscale)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumRicetta)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumRicetta)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DataVendita)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DataVendita)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdVendita }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

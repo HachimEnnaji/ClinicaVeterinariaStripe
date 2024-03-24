@@ -1,0 +1,92 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Animale>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="/lib/jquery//dist/jquery.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script type="text/javascript">
+    toastr.success('@TempData["message"]');
+</script>
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+    <div class="d-flex align-items-center">
+        <h2 class="display-4 me-4">Lista animali</h2>
+
+        <p class="m-0">
+            @Html.ActionLink("Inserisci nuovo", "Create", new { }, new { @class = " btn btn-success" })
+        </p>
+           
+       
+    </div>
+    
+    <table class="table table-striped-columns mt-4">
+        <tr>
+            <th></th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataRegistrazione)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Colore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataNascita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Microchip)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Propietario)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    <img src="~/Content/img/@item.Foto" alt="@item.Tipo" class="img-fluid rounded-circle imgAnimale"/>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataRegistrazione)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tipo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Colore)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataNascita)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Microchip)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Propietario)
+                </td>
+                <td>
+                    <div class="d-flex flex-column justify-content-between">
+                        @Html.ActionLink("Effettua visita", "VisitePerAnimale", "Visita", new { id = item.IdAnimale }, new { @class = "btn btn-success mb-3" })
+                        @Html.ActionLink("Modifica", "Edit", new { id = item.IdAnimale }, new { @class = "btn btn-warning mb-1" })
+                        @Html.ActionLink("Dettagli", "Details", new { id = item.IdAnimale }, new { @class = "btn btn-secondary mb-1" })
+                        @Html.ActionLink("Elimina", "Delete", new { id = item.IdAnimale }, new { @class = "btn btn-danger" })
+
+                    </div>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

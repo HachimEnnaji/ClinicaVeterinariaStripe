@@ -1,0 +1,34 @@
+﻿@model ClinicaVeterinaria.Models.Cassetti
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cassetti</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Armadietti.IdArmadietto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Armadietti.IdArmadietto)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroCassetto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NumeroCassetto)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCassetto }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

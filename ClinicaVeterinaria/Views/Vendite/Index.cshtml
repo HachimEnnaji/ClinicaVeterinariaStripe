@@ -1,0 +1,147 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Vendite>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+
+
+    <h2>Lista vendite</h2>
+
+
+    <table class="table table-striped-columns">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Proprietario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CodFiscale)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumRicetta)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataVendita)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Proprietario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CodFiscale)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumRicetta)
+                </td>
+                <td>
+                    @item.DataVendita.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdVendita }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+
+<main>
+    <div class="row">
+        <div class="col-sm-6">
+
+            <h3> Cerca Vendite per data </h3>
+            <input class="form-control" type="date" id="search" placeholder="Cerca vendite per data" />
+            <button id="bottone" class="btn btn-primary">Cerca</button>
+            <div id="result" class="d-none"></div>
+        </div>
+        <div class="col-sm-6">
+            <h3> Cerca Cliente tramite Codice Fiscale </h3>
+            <input class="form-control" type="text" id="searchCF" placeholder="Inserisci Codice fiscale" />
+            <button id="bottoneCF" class="btn btn-primary">Cerca</button>
+            <div id="resultCF" class="card mb-3 subtleBg d-none" style="max-width: 540px;">
+            </div>
+
+        </div>
+</main>
+
+@section Scripts{
+    <script>
+
+        const bottone = document.getElementById('bottone');
+        bottone.addEventListener('click', function () {
+            console.log("entra ? non entra")
+            const date = document.getElementById('search').value;
+            fetchMedicinaliPerData(date);
+        });
+
+        function fetchMedicinaliPerData(date) {
+            fetch("/Vendite/CercaMedicinaliPerData?DataVendita=" + date)
+                .then(response => response.json())
+                .then(data => {
+                    const div = document.getElementById('result');
+                    data.forEach(e => {
+                        const asincrona = document.createElement('div');
+                        asincrona.innerHTML =
+                            `<div class="card mb-3" style="max-width: 540px;">
+                                                        <div class="d-flex">
+                                                        <div class="card-body">
+                                                        <h5 class="card-title">Nome: ${e.Nome}</h5>
+                                                        <p>Cliente: ${e.Proprietario}</p>
+                                                        <p>Codice Fiscale: ${e.CodFiscale}</p>
+                                                    </div>
+                                                </div>
+                                            </div>`;
+                        div.appendChild(asincrona);
+                    });
+                    div.classList.remove('d-none');
+                })
+                .catch(error => console.error("Errore nel reperimento dati: ", error));
+        }
+
+        const bottoneCF = document.getElementById('bottoneCF');
+        bottoneCF.addEventListener('click', function () {
+            const codFiscale = document.getElementById('searchCF').value;
+            fetchClientePerCodFiscale(codFiscale);
+        });
+
+        function fetchClientePerCodFiscale(codFiscale) {
+            const div = document.getElementById('resultCF');
+            fetch("/Vendite/CercaMedicinaliPerCodiceFiscale?CodFiscale=" + codFiscale)
+                .then(response => response.json())
+                .then(data => {
+                    const div = document.getElementById('resultCF');
+                    const asincrona = document.createElement('div');
+                    asincrona.innerHTML = ` <div class="d-flex">
+                                                    <div class="card-body">
+                                                     <h5 class="card-title">Cliente: ${data[0].Proprietario}</h5>
+                                                       <p>CF: ${data[0].CodFiscale}</p>
+                                                     </div>
+                                                 </div> `
+
+                    data.forEach(e => {
+                        const jsonDate = e.DataVendita;
+                        var timestamp = parseInt(jsonDate.replace("/Date(", "").replace(")/", ""), 10);
+                        var date = new Date(timestamp);
+                        date = date.getDate() + "/" + (date.getMonth() + 1) + "/" + date.getFullYear();
+                        asincrona.innerHTML +=
+                            `<h5 class="card-title">Nome: ${e.Nome}</h5>
+                                 <p>Data: ${date}</p>`;
+                        asincrona.classList.add('ms-4');
+                        div.appendChild(asincrona);
+                    });
+                    div.classList.remove('d-none');
+                })
+                .catch(error => console.error("Errore nel reperimento dati: ", error));
+        }
+    </script>
+}
+

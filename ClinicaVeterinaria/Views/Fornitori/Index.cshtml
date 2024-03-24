@@ -1,0 +1,49 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Fornitori>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+
+    <h2>Lista Fornitori</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Recapito)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Indirizzo)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Recapito)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Indirizzo)
+                </td>
+                <td>
+                    @Html.ActionLink("Modifica", "Edit", new { id = item.IdFornitori } , new {@class = "btn btn-warning"}) 
+                    @Html.ActionLink("Elimina", "Delete", new { id = item.IdFornitori }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>

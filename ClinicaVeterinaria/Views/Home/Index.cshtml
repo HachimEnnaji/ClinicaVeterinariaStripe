@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+
+<main class="positionCeter">
+    <div class="row">
+        <div class="col-6 d-flex align-items-center index1000">
+            <div>
+                <h1 class="display-3 fw-normal text-white">Benvenuto nella Clinica Veterinaria</h1>
+                <div class="d-flex mt-5">
+                    @Html.ActionLink("Rintraccia il tuo cucciolo 👆", "CercaIlTuoAnimale", new {}, new {@class = "btn btn-success px-4 py-3" })
+                    <a href="tel:0123456789" class="btn btn-primary px-4 py-3 ms-3">Chiamaci</a>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-6 d-flex justify-content-center">
+            <img src="~/Content/img/homeVet.png" class="img-fluid" alt="Veterinario con cane" />
+        </div>
+        
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-3">
+            <div class="border border-secondary p-0 rounded-2 overflow-hidden shadow hoverable">
+                <img src="~/Content/img/vetHome1.jpeg" class="img-fluid" />
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="border border-secondary p-0 rounded-2 overflow-hidden shadow hoverable">
+                <img src="~/Content/img/vetHome2.jpg" class="img-fluid" />
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="border border-secondary p-0 rounded-2 overflow-hidden shadow hoverable">
+                <img src="~/Content/img/vetHome3.jpg" class="img-fluid" />
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="border border-secondary p-0 rounded-2 overflow-hidden shadow hoverable">
+                <img src="~/Content/img/vetHome4.jpg" class="img-fluid" />
+            </div>
+        </div>
+    </div>
+
+
+    
+
+
+</main>

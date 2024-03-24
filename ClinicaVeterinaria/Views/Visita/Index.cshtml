@@ -1,0 +1,62 @@
+﻿@model IEnumerable<ClinicaVeterinaria.Models.Visita>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
+
+
+    <h2 class="display-4">Lista visite</h2>
+    @if (!string.IsNullOrEmpty(Request.QueryString["id"]))
+    {
+        @Html.ActionLink("Effettua visita", "Create", "Visita", new { id = Request.QueryString["id"] }, null)
+    }
+
+    <table class="table table-striped-columns">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Animale.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Animale.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataVisita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Esame)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescrizioneCura)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Animale.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItel => item.Animale.Tipo)
+                </td>
+                <td>
+                    @item.DataVisita.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Esame)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DescrizioneCura)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdVisita }, new {@class="btn btn-warning"}) 
+                    @Html.ActionLink("Details", "Details", new { id = item.IdVisita }, new { @class = "btn btn-secondary" }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdVisita }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
