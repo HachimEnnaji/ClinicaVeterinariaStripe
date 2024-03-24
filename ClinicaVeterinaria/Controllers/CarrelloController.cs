@@ -56,5 +56,15 @@ namespace ClinicaVeterinaria.Controllers
             }
             return RedirectToAction("Index", "Prodotti");
         }
+
+        public ActionResult success()
+        {
+            return RedirectToAction("Index", "Prodotti");
+        }
+
+        public ActionResult cancel()
+        {
+            return RedirectToAction("Index", "Prodotti");
+        }
     }
 }

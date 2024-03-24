@@ -53,11 +53,23 @@
     </table>
 
     <form action="/Home/CreateCheckOutSession" method="post">
-        <input type="text" id="amount" name="amount" placeholder="@Model.Sum(item => item.Prezzo).ToString("0.00")"  value="@Model.Sum(item => item.Prezzo).ToString("0.00")"/>
+        <input type="text" id="amount" name="amount" placeholder="@Model.Sum(item => item.Prezzo).ToString("0.00")" value="@Model.Sum(item => item.Prezzo).ToString("0.00")" />
+        <div class="input-group mb-2">
+            <span class="input-group-text">Proprietario</span>
+            <input id="Proprietario" name="Proprietario" required class="form-control" type="text" />
+        </div>
+        <div class="input-group mb-2">
+            <span class="input-group-text">Codice Fiscale</span>
+            <input id="CodFiscale" name="CodFiscale" required class="form-control" type="text" />
+        </div>
+        <div class="input-group">
+            <span class="input-group-text">Numero Ricetta</span>
+            <input id="NumRicetta" name="NumRicetta" required class="form-control" type="text" />
+        </div>
         <button type="submit">Checkout</button>
     </form>
     <p class="text-end me-3 fs-4 fw-bold text-black-50">Totale ordine: &euro;@(Model.Sum(item => item.Prezzo).ToString("0.00")) </p>
-    @using (Html.BeginForm("Acquista", "Carrello", FormMethod.Post))
+    @*@using (Html.BeginForm("Acquista", "Carrello", FormMethod.Post))
     {
         <div>
             <div class="input-group mb-2">
@@ -74,6 +86,6 @@
             </div>
             <input class="btn btn-primary mt-4" type="submit" value="Conferma ordine" />
         </div>
-    }
+    }*@
 
 </div>

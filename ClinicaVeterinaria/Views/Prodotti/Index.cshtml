@@ -4,7 +4,18 @@
     ViewBag.Title = "Index";
 }
 
-
+@if (TempData["payment"] != null)
+{
+    <div id="myAlert" class="alert alert-success my-3 display-2" role="alert">
+        @TempData["payment"]
+    </div>
+}
+@if (TempData["paymentNo"] != null)
+{
+    <div id="myAlert" class="alert alert-danger my-3 display-2" role="alert">
+        @TempData["payment"]
+    </div>
+}
 
 <div class="subtleBg px-3 py-4 mt-4 rounded-3 fs-5">
 
@@ -18,7 +29,7 @@
                 <input class="form-control" type="text" id="search" placeholder="Cerca Prodotto" />
                 <button id="bottone" class="btn btn-primary ms-2"> Cerca</button>
             </div>
-            
+
             <div id="result" class="d-none mt-3">
                 <div class="card mb-3">
                     <div class="row g-0">
@@ -45,9 +56,9 @@
     </div>
 
 
-    
 
-    
+
+
 </div>
 <div class="row mt-4 g-2">
     @foreach (var item in Model)
@@ -99,7 +110,7 @@
                 .then(data => {
                     const div = document.getElementById('result');
                     const nome = document.getElementById('nome');
-                    nome.textContent ="Nome: " + data.Nome;
+                    nome.textContent = "Nome: " + data.Nome;
                     const armadietto = document.getElementById('armadietto');
                     armadietto.textContent = "Armadietto: " + data.Id_Armadietto_FK;
                     const cassetto = document.getElementById('cassetto');
@@ -110,6 +121,13 @@
                 })
                 .catch(error => console.error("Errore nel reperimento dati: ", error));
 
+        }
+
+        const alert = document.getElementById('myAlert');
+        if (alert) {
+            setTimeout(() => {
+                alert.classList.add('d-none');
+            }, 3000);
         }
     </script>
 }

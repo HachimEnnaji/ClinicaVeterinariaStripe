@@ -9,7 +9,7 @@ namespace ClinicaVeterinaria.Controllers
 
 
         [HttpPost]
-        public async Task<ActionResult> ProcessPayment(PaymentIntentRequest request)
+        public async Task<ActionResult> ProcessPayment(PaymentIntentRequest request, string Proprietario, string CodFiscale, string NumRicetta)
         {
             var paymentIntentService = new PaymentIntentService();
             var paymentIntent = await paymentIntentService.CreateAsync(new PaymentIntentCreateOptions
@@ -23,13 +23,14 @@ namespace ClinicaVeterinaria.Controllers
             if (paymentIntent.Status == "succeeded")
             {
                 // The payment was successful
-                return Json(new { success = true });
+                TempData["payment"] = "Payment succeeded!";
             }
             else
             {
                 // Handle different payment statuses and errors
-                return Json(new { success = false, error = "Payment failed" });
+                TempData["payment"] = "Payment failed!";
             }
+            return RedirectToAction("Index", "Prodotti");
         }
 
         public class PaymentIntentRequest

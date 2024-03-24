@@ -1,8 +1,10 @@
 ﻿using ClinicaVeterinaria.Models;
 using Stripe;
 using Stripe.Checkout;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -35,8 +37,11 @@ namespace ClinicaVeterinaria.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateCheckoutSession()
+        public ActionResult CreateCheckoutSession(string Proprietario, string CodFiscale, string NumRicetta)
         {
+            TempData["Proprietario"] = Proprietario;
+            TempData["CodFiscale"] = CodFiscale;
+            TempData["NumRicetta"] = NumRicetta;
             var ListaCarrello = Session["CarrelloSession"] as List<Prodotti>;
 
             var Options = new SessionCreateOptions
@@ -91,12 +96,39 @@ namespace ClinicaVeterinaria.Controllers
 
         public ActionResult success()
         {
-            return View();
+            TempData["payment"] = "Acquisto effettuato!";
+            var ListaCarrello = Session["CarrelloSession"] as List<Prodotti>;
+            if (ListaCarrello != null)
+            {
+                Vendite vendita = new Vendite();
+                vendita.Proprietario = TempData["Proprietario"].ToString();
+                vendita.CodFiscale = TempData["CodFiscale"].ToString();
+                vendita.NumRicetta = TempData["NumRicetta"].ToString();
+                vendita.DataVendita = DateTime.Now;
+                db.Vendite.Add(vendita);
+                db.SaveChanges();
+
+                foreach (var item in ListaCarrello)
+                {
+                    DettagliVendita DV = new DettagliVendita();
+                    DV.Id_Vendita_FK = vendita.IdVendita;
+                    DV.Id_Prodotto_FK = item.IdProdotto;
+                    db.DettagliVendita.Add(DV);
+                    db.SaveChanges();
+                }
+                ListaCarrello.Clear();
+            }
+            return RedirectToAction("Index", "Prodotti");
         }
 
         public ActionResult cancel()
         {
-            return View();
+            TempData["paymentNo"] = "Ops qualcosa e' andato storto!";
+            return RedirectToAction("Index", "Prodotti");
         }
+
+        
+            
+        
     }
 }
