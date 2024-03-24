@@ -28,6 +28,7 @@ namespace ClinicaVeterinaria.Controllers
             var search = await db.Animale.Include(a => a.Ricovero).Include(a => a.Visita).FirstOrDefaultAsync(a => a.Microchip == Microchip && a.Propietario == "rifugio");
             if (search == null)
             {
+                System.Diagnostics.Debug.WriteLine("Animale non trovato");
                 return HttpNotFound();
             }
             return Json(search, JsonRequestBehavior.AllowGet);
